@@ -43,6 +43,9 @@ dev.env
 .env.production.local
 .env.local
 
+# Firebase service account private keys
+src/common/utils/*firebase-adminsdk*.json
+
 # temp directory
 .temp
 .tmp

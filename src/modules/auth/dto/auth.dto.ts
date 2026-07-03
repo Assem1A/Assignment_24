@@ -1,25 +1,42 @@
-import { IsEmail, IsStrongPassword, MaxLength, MinLength, ValidateIf } from "class-validator";
+import { IsEmail, IsEnum, IsStrongPassword, MaxLength, MinLength, ValidateIf } from "class-validator";
 import { ValidatorConstraint, ValidatorConstraintInterface, ValidationArguments } from 'class-validator';
 import { registerDecorator, ValidationOptions } from 'class-validator';
-import { isMAtch } from "src/common/decorators/custom.decorators";
+import { isMAtch } from "../../../common/decorators/custom.decorators";
+import { GenderEnum } from "../../../enums";
+import mongoose from "mongoose";
 
 
-export class LoginDTO {
-    @IsEmail()
-    email?: string;
-    @IsStrongPassword({minNumbers:3,minLowercase:1,minUppercase:1,minSymbols:1})
-    password!: string
+
+export interface ILoginDTO extends Iemail{
+    FCM:string
+    password:string
 }
-export class signupDTO extends LoginDTO {
-    @MinLength(6)
-    @MaxLength(55)
+export interface ISignupDTO extends ILoginDTO{
+    username:string
+    gender:string
+}
+export interface IConfirmEmailDTO extends Iemail{
+
+    otp:string
+}
+export interface Iemail{
+    email:string
+}
+export interface IForgetPassword extends ILoginDTO{
+otp:string
+}
 
 
-    username!: string;
-    @ValidateIf((data:any)=>{
-        return Boolean(data.password)
-    })
-    @isMAtch(['password'],{message:"mismatch"})
-    confirmPassword!:string;
+export interface IloginGeneric {
+  token: string
+  refreshToken:string
+}
+export interface ISignupGeneric extends IConfirmEmailGeneric {
+username:String |undefined
+gender:GenderEnum
+id:mongoose.Types.ObjectId
 
+}
+export interface IConfirmEmailGeneric {
+    email:String
 }

@@ -4,6 +4,7 @@ import { PORT } from './config/cofig.env';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  // const PORT=process.env.PORT as string 
   await app.listen(PORT,()=>{
     console.log(`server is running ${PORT}😂😂`
     );
